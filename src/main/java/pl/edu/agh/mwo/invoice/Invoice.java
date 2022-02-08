@@ -13,6 +13,9 @@ public class Invoice {
     }
 
     public void addProduct(Product product, Integer quantity) {
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("Quantity cannot be zero or less");
+        }
         this.products.put(product, quantity);
     }
 
@@ -27,10 +30,15 @@ public class Invoice {
     }
 
     public BigDecimal getTax() {
-        return null;
+        BigDecimal tax = BigDecimal.ZERO;
+        for(Product product : this.products.keySet()) {
+            tax = tax.add(product.getPriceWithTax().subtract(product.getPrice()));
+        }
+        return tax;
     }
 
     public BigDecimal getTotal() {
-        return null;
+        BigDecimal total = BigDecimal.ZERO;
+        return total;
     }
 }
