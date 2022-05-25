@@ -1,6 +1,8 @@
 package pl.edu.agh.mwo.invoice;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -140,5 +142,47 @@ public class InvoiceTest {
     }
 
     @Test
-    public void testTwoInvoicesHas
+    public void testPrintInvoiceWithNoItems() {
+        int number = invoice.getNumber();
+        Assert.assertEquals("Invoice no. 1" +"\n" +
+                "Number of elements: 0", invoice.printInvoice());
+    }
+
+    @Test
+    public void testPrintInvoiceWithOneItem() {
+        Product product = new DairyProduct("ser żółty", BigDecimal.valueOf(20.0));
+        invoice.addProduct(product);
+        Assert.assertEquals(
+                "Invoice no. 1"
+                        + "\n" + "Product: " + product.getName() + ", " + "Quantity: 1" + ", " + "Price: 21.600"
+                        + "\n" + "Number of elements: 1",
+                invoice.printInvoice()
+        );
+    }
+
+    @Test
+    public void testPrintInvoiceWithTwoItems() {
+        Product product1 = new DairyProduct("ser żółty", BigDecimal.valueOf(20.0));
+        Product product2 = new DairyProduct("ser biały", BigDecimal.valueOf(15.0));
+        invoice.addProduct(product1);
+        invoice.addProduct(product2);
+        Assert.assertEquals(
+                "Invoice no. 1"
+                        + "\n" + "Product: " + product1.getName() + ", " + "Quantity: 1" + ", " + "Price: 21.600"
+                        + "\n" + "Product: " + product2.getName() + ", " + "Quantity: 1" + ", " + "Price: 16.200"
+                        + "\n" + "Number of elements: 2",
+                invoice.printInvoice()
+        );
+    }
+
+    @Test
+    public void testNoDuplicatesWhenAddSameProductTwoTimes() {
+        Product p1 = new DairyProduct("ser żółty", BigDecimal.valueOf(20.0));
+
+        invoice.addProduct(p1);
+        invoice.addProduct(p1);
+
+        Assert.assertEquals(1, invoice.getProducts().size());
+    }
 }
+
