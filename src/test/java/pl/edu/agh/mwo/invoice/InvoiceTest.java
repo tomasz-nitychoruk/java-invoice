@@ -144,7 +144,7 @@ public class InvoiceTest {
     @Test
     public void testPrintInvoiceWithNoItems() {
         int number = invoice.getNumber();
-        Assert.assertEquals("Invoice no. 1" +"\n" +
+        Assert.assertEquals("Invoice no. "+ invoice.getNumber() +"\n" +
                 "Number of elements: 0", invoice.printInvoice());
     }
 
@@ -153,7 +153,7 @@ public class InvoiceTest {
         Product product = new DairyProduct("ser żółty", BigDecimal.valueOf(20.0));
         invoice.addProduct(product);
         Assert.assertEquals(
-                "Invoice no. 1"
+                "Invoice no. " + invoice.getNumber()
                         + "\n" + "Product: " + product.getName() + ", " + "Quantity: 1" + ", " + "Price: 21.600"
                         + "\n" + "Number of elements: 1",
                 invoice.printInvoice()
@@ -167,9 +167,9 @@ public class InvoiceTest {
         invoice.addProduct(product1);
         invoice.addProduct(product2);
         Assert.assertEquals(
-                "Invoice no. 1"
-                        + "\n" + "Product: " + product1.getName() + ", " + "Quantity: 1" + ", " + "Price: 21.600"
+                "Invoice no. " + invoice.getNumber()
                         + "\n" + "Product: " + product2.getName() + ", " + "Quantity: 1" + ", " + "Price: 16.200"
+                        + "\n" + "Product: " + product1.getName() + ", " + "Quantity: 1" + ", " + "Price: 21.600"
                         + "\n" + "Number of elements: 2",
                 invoice.printInvoice()
         );
