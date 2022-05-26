@@ -75,10 +75,12 @@ public class Invoice {
 
         printList = "Invoice no. " + invoiceNumber + "\n";
 
+
         for (Product product : products.keySet()) {
+            BigDecimal quantity = new BigDecimal(products.get(product));
             String line = "Product: " + product.getName() + ", "
                     + "Quantity: " + products.get(product) + ", "
-                    + "Price: " + product.getPriceWithTax()
+                    + "Price: " + product.getPriceWithTax().multiply(quantity)
                     + "\n";
 
             printList+=line;

@@ -161,16 +161,28 @@ public class InvoiceTest {
     }
 
     @Test
-    public void testPrintInvoiceWithTwoItems() {
+    public void testPrintInvoiceWithTwoSameItems() {
+        Product product = new DairyProduct("ser żółty", BigDecimal.valueOf(20.0));
+        invoice.addProduct(product, 2);
+        Assert.assertEquals(
+                "Invoice no. " + invoice.getNumber()
+                        + "\n" + "Product: " + product.getName() + ", " + "Quantity: 2" + ", " + "Price: 43.200"
+                        + "\n" + "Number of elements: 1",
+                invoice.printInvoice()
+        );
+    }
+
+    @Test
+    public void testPrintInvoiceWithTwoDifferentItems() {
         Product product1 = new DairyProduct("ser żółty", BigDecimal.valueOf(20.0));
         Product product2 = new DairyProduct("ser biały", BigDecimal.valueOf(15.0));
         invoice.addProduct(product1);
         invoice.addProduct(product2);
         Assert.assertEquals(
                 "Invoice no. " + invoice.getNumber()
-                        + "\n" + "Product: " + product2.getName() + ", " + "Quantity: 1" + ", " + "Price: 16.200"
                         + "\n" + "Product: " + product1.getName() + ", " + "Quantity: 1" + ", " + "Price: 21.600"
-                        + "\n" + "Number of elements: 2",
+                        + "\n" + "Product: " + product2.getName() + ", " + "Quantity: 1" + ", " + "Price: 16.200"
+                                                + "\n" + "Number of elements: 2",
                 invoice.printInvoice()
         );
     }
